@@ -1,5 +1,7 @@
 # Direção visual e versões
 
+Atualização da Etapa 4: mesmo tema, NativeWind 4.2.7, mapas, Reanimated 4.7.1 e Worklets 0.13.0. `expo install --fix` alinhou módulos ao SDK 58 atual: Expo 58.0.23, React Native 0.88.1, Location 58.0.20, TaskManager 58.0.13 e Safe Area 5.11.1, entre os demais patches recomendados. Nenhuma configuração de plataforma foi substituída. A operação do motorista usa lista virtualizada e uma sessão de rastreamento local explícita. Capacidades e pendências físicas estão em [driver-operations.md](driver-operations.md).
+
 Atualização da Etapa 3: acompanhamento com `@gorhom/bottom-sheet 5.2.14` (peer Reanimated 4/Gesture Handler 3 verificado), `expo-network ~58.0.4` e Leaflet 1.9.4 apenas no web. Mapas nativos mantêm react-native-maps 1.29.11. Tokens visuais preservados; marcador tem animação finita e respeita redução de movimento. Nenhum benchmark de fps foi declarado. Mais detalhes em [tracking.md](tracking.md).
 
 Atualização da Etapa 2: preservados tema, NativeWind e versões nativas. Adicionados `jwt-decode` para leitura local do JWT e `tsx`/`@types/node` para testes. Axios e Zustand agora implementam HTTP e sessão; SignalR permanece instalado para a Etapa 3. Formulários usam KeyboardAvoidingView, scroll, inputs com autofill e erros acessíveis. A área autenticada distingue Parent/Student/Driver sem simular dados de viagem.

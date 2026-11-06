@@ -1,5 +1,7 @@
 # Etapa 2 — Sessão e autenticação
 
+**Etapa 4:** logout/expiração invalidam callbacks de GPS e conexões imediatamente, removem credenciais e aguardam a parada nativa antes de liberar outra conta. Falha de limpeza mantém o gate com nova tentativa. O bootstrap para tarefas órfãs antes de restaurar login; restaurar autenticação nunca restaura automaticamente uma sessão local de rastreamento. A invalidação pelo Hub é iniciada fora da cadeia de conexão para que o descarte possa aguardar a própria conexão sem deadlock. Veja [operação do motorista](driver-operations.md).
+
 **Validação local posterior:** backend encontrado em `Desktop\Vanos-Limpo`, compilado em cópia isolada e executado com SQL Express/banco dedicado. Cadastro/login reais foram verificados para os três perfis. O [roteiro local](local-validation.md) substitui a limitação de API inacessível registrada ao fim deste documento; os limites de SecureStore no web e teste físico permanecem.
 
 Implementação HTTP dos contratos reais, reconfirmados em 26/10/2026 na branch padrão `master`, commit [`9fc0757d17e3595de840b22b859c6ef0c27807b8`](https://github.com/cauanzzz/Vanos-Backend/tree/9fc0757d17e3595de840b22b859c6ef0c27807b8). Foram relidos AuthController, LoginRequest, RegisterRequest, AuthResponse, JwtTokenService, Roles e Program.cs. Backend somente leitura.

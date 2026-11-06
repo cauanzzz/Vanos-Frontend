@@ -1,5 +1,7 @@
 # Auditoria de integração — Etapa 1
 
+**Etapa 4 — 06/11/2026:** backend local reconfirmado limpo em `9fc0757d17e3595de840b22b859c6ef0c27807b8`. `DriversController`, `StudentsController`, `TrackingHub` e configuração de autenticação mantêm os contratos auditados. Mobile consulta motorista próprio e passageiros vinculados e publica pelo Hub. Não há rotas/turnos/viagem/chamada nem ingestão HTTP de GPS. Veja [operação e proposta mínima de backend](driver-operations.md) e [validação da Etapa 4](validation-stage-4.md). Nenhum arquivo do backend foi alterado.
+
 **Etapa 3:** GET de passageiros, PATCH de ida/volta e Hub integrados. O protocolo JSON `LocationUpdated` em camelCase, isolamento de destinatários e reconexão foram verificados contra a API local real no mesmo commit. Limitações de data/ETA/heading/snapshot permanecem. Veja [tracking.md](tracking.md).
 
 **Validação local posterior:** repositório encontrado em `C:\Users\cauan\Desktop\Vanos-Limpo` no mesmo commit e sem alterações. API executada em cópia isolada, oito migrations aplicadas ao banco local dedicado e cadastro/login reais conferidos nos três perfis. Veja [local-validation.md](local-validation.md). Os bloqueios de acesso local descritos historicamente abaixo já foram superados; nada foi alterado no backend original.
