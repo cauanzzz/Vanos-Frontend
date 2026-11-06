@@ -1,0 +1,38 @@
+/* Web-only Leaflet layout. SVG circle markers and text controls need no image assets. */
+.leaflet-container { overflow: hidden; background: #e5ede4; font: 12px/1.5 system-ui, sans-serif; isolation: isolate; }
+.leaflet-pane, .leaflet-tile, .leaflet-tile-container, .leaflet-layer, .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-map-pane svg, .leaflet-map-pane canvas, .leaflet-zoom-box { position: absolute; top: 0; left: 0; }
+.leaflet-container img.leaflet-tile { max-width: none !important; max-height: none !important; border: 0; padding: 0; }
+.leaflet-tile { visibility: hidden; user-select: none; -webkit-user-drag: none; }
+.leaflet-tile-loaded { visibility: inherit; }
+.leaflet-zoom-animated { transform-origin: 0 0; }
+.leaflet-zoom-anim .leaflet-zoom-animated { transition: transform .25s cubic-bezier(0, 0, .25, 1); }
+.leaflet-pane { z-index: 400; }
+.leaflet-tile-pane { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane { z-index: 500; }
+.leaflet-marker-pane { z-index: 600; }
+.leaflet-tooltip-pane { z-index: 650; }
+.leaflet-popup-pane { z-index: 700; }
+.leaflet-overlay-pane svg { max-width: none !important; max-height: none !important; pointer-events: none; }
+.leaflet-interactive { pointer-events: visiblePainted; }
+.leaflet-grab { cursor: grab; }
+.leaflet-dragging .leaflet-grab { cursor: grabbing; }
+.leaflet-touch-drag, .leaflet-touch-zoom { touch-action: none; }
+.leaflet-control { position: relative; z-index: 800; float: left; clear: both; pointer-events: auto; }
+.leaflet-top, .leaflet-bottom { position: absolute; z-index: 1000; pointer-events: none; }
+.leaflet-top { top: 0; }
+.leaflet-bottom { bottom: 0; }
+.leaflet-left { left: 0; }
+.leaflet-right { right: 0; }
+.leaflet-right .leaflet-control { float: right; margin-right: 10px; }
+.leaflet-left .leaflet-control { margin-left: 10px; }
+.leaflet-top .leaflet-control { margin-top: 10px; }
+.leaflet-bottom .leaflet-control { margin-bottom: 10px; }
+.leaflet-control-attribution { max-width: calc(100vw - 24px); border-radius: 4px; padding: 2px 6px; background: rgba(255, 255, 255, .95); color: #182f2a; font-size: 11px; }
+.leaflet-control-attribution a { color: #235c46; text-decoration: underline; }
+.leaflet-control-zoom { overflow: hidden; border: 1px solid #d8dfd8; border-radius: 8px; }
+.leaflet-control-zoom a { display: block; width: 36px; height: 36px; background: white; color: #182f2a; text-align: center; font-size: 24px; line-height: 36px; text-decoration: none; }
+.leaflet-control-zoom a + a { border-top: 1px solid #d8dfd8; }
+.leaflet-control-zoom .leaflet-disabled { color: #7f8a84; cursor: default; }
+.leaflet-control a:focus-visible { outline: 3px solid #235c46; outline-offset: -3px; }
+@media (prefers-reduced-motion: reduce) { .leaflet-zoom-animated { transition: none !important; } }
