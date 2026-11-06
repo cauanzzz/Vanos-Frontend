@@ -50,7 +50,8 @@ export function createTrackingClient(deps: {
     chain = chain.then(async () => {
       queued = false;
       if (!current() || version !== generation) return;
-      if (deps.session.expiresAt <= now()) { enabled = false; await deps.invalidate(deps.session); return; }
+      // Invalidation awaits session cleanup, which may dispose this client. Do not await it inside its own connection chain.
+      if (deps.session.expiresAt <= now()) { enabled = false; void deps.invalidate(deps.session).catch(() => undefined); return; }
       deps.onStatus(attempt ? 'reconnecting' : 'connecting');
       try {
         await deps.connection.start();
@@ -65,7 +66,7 @@ export function createTrackingClient(deps: {
         if (isHubAuthError(error)) {
           cancelRetry?.(); cancelRetry = undefined;
           enabled = false;
-          await deps.invalidate(deps.session);
+          void deps.invalidate(deps.session).catch(() => undefined);
         } else retry();
       }
     }).catch(() => { if (current()) retry(); }).finally(() => {

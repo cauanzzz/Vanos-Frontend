@@ -41,6 +41,18 @@ function fixture(overrides: { storage?: Partial<CredentialStorage>; gateway?: Pa
 }
 const login = { email: 'unit@example.test', password: 'test-only-password' };
 
+test('logout clears credentials immediately but gates another account until native cleanup finishes; failure is retryable', async () => {
+  const gate = deferred<void>(); let removed = false; let fail = false;
+  const store = createAuthStore({ storage: { read: async () => null, write: async () => undefined, remove: async () => { removed = true; } },
+    gateway: { login: async () => response('Driver'), register: async () => response('Driver') }, now: () => now, schedule: () => () => undefined,
+    onSessionEnd: async () => { await gate.promise; if (fail) throw new Error('native stop failed'); } });
+  await store.getState().restore(); await store.getState().login(login);
+  const logout = store.getState().logout(); await Promise.resolve(); await Promise.resolve();
+  assert.equal(store.getState().session, null); assert.equal(store.getState().phase, 'signingOut'); assert.equal(removed, true);
+  await assert.rejects(store.getState().login(login)); fail = true; gate.resolve(); await logout;
+  assert.equal(store.getState().phase, 'storageError'); fail = false; await store.getState().logout(); assert.equal(store.getState().phase, 'anonymous');
+});
+
 test('restoration stays pending, is idempotent and gates access until storage resolves', async () => {
   const read = deferred<string | null>();
   let reads = 0;

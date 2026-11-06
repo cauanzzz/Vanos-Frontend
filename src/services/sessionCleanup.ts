@@ -1,10 +1,13 @@
-const listeners = new Set<() => void>();
+const listeners = new Set<() => void | Promise<void>>();
 
-export function registerSessionCleanup(cleanup: () => void) {
+export function registerSessionCleanup(cleanup: () => void | Promise<void>) {
   listeners.add(cleanup);
   return () => { listeners.delete(cleanup); };
 }
-export function clearSessionResources() {
-  // Each listener clears memory synchronously and starts its own guarded teardown.
-  for (const cleanup of listeners) cleanup();
+export async function clearSessionResources() {
+  // Invoke every listener immediately, then await native teardown before allowing another login.
+  const results = await Promise.allSettled([...listeners].map((cleanup) => {
+    try { return cleanup(); } catch (error: unknown) { return Promise.reject(error); }
+  }));
+  if (results.some((result) => result.status === 'rejected')) throw new Error('Session resource cleanup failed');
 }

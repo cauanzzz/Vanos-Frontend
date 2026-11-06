@@ -1,1 +1,1 @@
-export { AccountScreen as default } from '@/features/auth/AccountScreen';
+export { DriverScreen as default } from '@/features/driver/DriverScreen';

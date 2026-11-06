@@ -22,7 +22,7 @@ export interface AuthState {
 interface Dependencies {
   storage: CredentialStorage;
   gateway: AuthGateway;
-  onSessionEnd?: () => void;
+  onSessionEnd?: () => void | Promise<void>;
   now?: () => number;
   schedule?: (fn: () => void, delay: number) => () => void;
 }
@@ -57,10 +57,16 @@ export function createAuthStore({ storage, gateway, onSessionEnd, now = Date.now
       cancelExpiry?.();
       cancelExpiry = undefined;
       set({ session: null, busy: false, phase: 'signingOut', notice, recovery: 'clear' });
-      onSessionEnd?.();
-      clearPending = persist(() => storage.remove()).then(
+      let cleanup: Promise<void>;
+      try { cleanup = Promise.resolve(onSessionEnd?.()); } catch (error: unknown) { cleanup = Promise.reject(error); }
+      // Observe cleanup immediately; still remove credentials if native cleanup fails.
+      const resources = cleanup.then(() => true, () => false);
+      clearPending = persist(async () => {
+        await storage.remove();
+        if (!await resources) throw new Error('Resource cleanup failed');
+      }).then(
         () => { set({ phase: 'anonymous' }); },
-        () => { set({ phase: 'storageError', notice: 'Não foi possível apagar as credenciais do aparelho. Tente novamente antes de continuar.' }); },
+        () => { set({ phase: 'storageError', notice: 'Não foi possível confirmar a limpeza da sessão e a parada do GPS. Tente novamente antes de continuar.' }); },
       ).finally(() => { clearPending = null; });
       return clearPending;
     }

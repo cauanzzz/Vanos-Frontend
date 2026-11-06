@@ -14,7 +14,7 @@ const clients = createHttpClients({
 export const authStore = createAuthStore({
   storage: credentialStorage,
   gateway: createAuthApi(clients.publicApi),
-  onSessionEnd: () => { clients.cancelPending(); clearSessionResources(); },
+  onSessionEnd: () => { clients.cancelPending(); return clearSessionResources(); },
 });
 export const api = clients.api;
 export function useAuth<T>(selector: (state: AuthState) => T): T {
