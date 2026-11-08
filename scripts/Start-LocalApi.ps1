@@ -1,9 +1,20 @@
 param(
-  [string]$BackendRoot = 'C:\Users\cauan\Desktop\Vanos-Limpo'
+  [string]$BackendRoot = $env:VANOS_BACKEND_ROOT
 )
 
 $ErrorActionPreference = 'Stop'
 $workspaceRoot = Split-Path -Parent $PSScriptRoot
+if ([string]::IsNullOrWhiteSpace($BackendRoot)) {
+  $candidates = @(
+    (Join-Path (Split-Path -Parent $workspaceRoot) 'Vanos-Backend'),
+    (Join-Path $env:USERPROFILE 'Desktop\Vanos-Limpo')
+  )
+  $BackendRoot = $candidates | Where-Object {
+    Test-Path -LiteralPath (Join-Path $_ 'Desktop\Vanos\Vanos.API\Vanos.API.csproj')
+  } | Select-Object -First 1
+  if (-not $BackendRoot) { throw 'Clone o backend ao lado do mobile em Vanos-Backend ou defina VANOS_BACKEND_ROOT com o caminho do clone auditado.' }
+}
+$BackendRoot = (Resolve-Path -LiteralPath $BackendRoot).Path
 $sourceApi = Join-Path $BackendRoot 'Desktop\Vanos\Vanos.API'
 $isolatedApi = Join-Path $workspaceRoot '.expo\backend-local'
 $expectedCommit = '9fc0757d17e3595de840b22b859c6ef0c27807b8'

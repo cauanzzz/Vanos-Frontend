@@ -68,7 +68,7 @@ Cada reinício da API gera uma chave JWT nova; sessões anteriores serão recusa
 
 ## Testes exatos pela interface
 
-Use dados fictícios somente neste ambiente. Sugestão: `manual.parent.2610@example.test` e senha `VanosLocal!2026` (credencial de teste local, nunca reutilizar em produção). Para repetir um cadastro, use outro e-mail; a conta anterior permanece no banco dedicado.
+Use dados fictícios somente neste ambiente. Para recriar contas vinculadas, execute `npm.cmd run tracking:check` e consulte as credenciais aleatórias em `.expo/tracking-fixture.json`, ignorado pelo Git. Para cadastro manual, escolha outro endereço fictício em `example.test` e uma senha exclusiva. A conta anterior permanece no banco dedicado; não versione os dados gerados nem reutilize credenciais de contas reais.
 
 ### 1. Cadastro
 

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { create } from 'axios';
 
@@ -14,7 +15,7 @@ import type { Session } from '../src/types/auth';
 // Explicit local fixtures. No native GPS, production credentials or remote DB.
 async function main() {
 const origin = 'http://localhost:5108';
-const password = 'VanosLocal!2026';
+const password = randomBytes(24).toString('base64url');
 const suffix = Date.now().toString(36);
 const email = (name: string) => `tracking-${name}-${suffix}@example.test`;
 const parentEmail = email('parent');
@@ -127,7 +128,7 @@ try {
   await mkdir('.expo', { recursive: true });
   await writeFile('.expo/tracking-fixture.json', JSON.stringify({ parentEmail, driverEmail, otherEmail, password, driverId, studentId,
     note: 'Somente validação local. Pontos publicados por scripts são sintéticos, não GPS de aparelho.' }, null, 2));
-  console.log('Fixture local salva em .expo/tracking-fixture.json (sem JWT). Nenhum dado de produção usado.');
+  console.log('Contas com senha aleatória salvas somente em .expo/tracking-fixture.json (ignorado pelo Git, sem JWT). Nenhum dado de produção usado.');
 } finally {
   await client.dispose();
   await Promise.allSettled([otherHub.stop(), driverHub.stop()]);

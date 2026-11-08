@@ -2,6 +2,8 @@
 
 Este roteiro usa **development build local** e somente API/banco isolados no PC. Não precisa de push, EAS, deploy, credencial de produção, exposição da API na rede nem modificação do backend. Não foi executado em aparelho neste trabalho.
 
+Para instalar em outro computador, siga primeiro [handoff-stage-4.md](handoff-stage-4.md). Nos comandos abaixo, substitua o caminho histórico `C:\Users\cauan\vanos-mobile` pelo seu clone. A variável `VANOS_BACKEND_ROOT`, definida no terminal da API, substitui qualquer dependência do caminho original do backend.
+
 ## 1. Preparar o PC e a chave Maps
 
 Neste ambiente foram encontrados SQL Express ativo e Java 24. Não foram encontrados Android Studio no caminho padrão, SDK configurado ou `adb` no PATH. Para compilar, instale [Android Studio](https://developer.android.com/studio), SDK/Command-line Tools (latest)/Platform-Tools pelo SDK Manager e um JDK 17 (por exemplo Temurin 17). SDK/Build Tools/NDK abaixo vêm do catálogo **do React Native instalado**, não de um tutorial de outra versão.

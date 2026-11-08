@@ -2,6 +2,8 @@
 
 Aplicativo Expo / React Native em TypeScript strict. **Etapa 4: operação do motorista implementada; validação física de GPS/background ainda pendente.**
 
+**Outro computador:** comece pela [entrega ao desenvolvedor](docs/handoff-stage-4.md), com clone da branch correta, pré-requisitos, backend isolado, recriação de contas locais e roteiro físico curto. Os caminhos deste PC nas auditorias abaixo são registros históricos, não requisitos da instalação.
+
 Veja [acompanhamento, testes e limites da Etapa 3](docs/tracking.md). Android/iOS e desempenho do marcador ainda precisam de validação física; Android requer chave Maps e um novo development build.
 
 Motorista: [fluxo, contratos e limites](docs/driver-operations.md), [comandos de build e roteiro Android no Windows](docs/android-stage-4.md) e [evidências de validação](docs/validation-stage-4.md). Há lista vinculada, início/fim de sessão **local**, captura de GPS e publicação pelo Hub existente. A captura em segundo plano é opcional; a continuidade do SignalR com a tela bloqueada ainda precisa de aparelho. Não existem viagens/rotas/turnos/chamada no servidor.
@@ -45,7 +47,7 @@ Use `a` para o emulador Android ou abra o QR/link no development client do celul
 
 `expo-dev-client` e os perfis de `eas.json` já estão configurados. Android package e iOS bundle identifier: `com.cauanzzz.vanos`; scheme: `vanos`. São identificadores iniciais e devem ser conferidos antes da distribuição.
 
-**Nenhum build remoto, login EAS, push, deploy ou publicação foi executado.** Quando você decidir gerar o binário na sua conta, os comandos são:
+**Nenhum build remoto, login EAS ou deploy foi executado nesta etapa.** O envio da branch Git para colaboração é tratado no [handoff](docs/handoff-stage-4.md). Quando você decidir gerar o binário na sua conta, os comandos são:
 
 ```powershell
 npx.cmd eas-cli@latest login
